@@ -1,0 +1,52 @@
+<resources>
+
+    <string name="app_name">culturalwordsgame</string>
+    <string name="share_the_question_with_friends">ask your friend</string>
+    <string name="share_question_text">share</string>
+    <string name="share_title_hint">add the title</string>
+    <string name="the_right_answer_is">the answer is :</string>
+    <string name="back_text">Return</string>
+    <string name="permission_title">describe</string>
+    <string name="permission_explanation">The application needs to have write access to the external storage to store the image in preparation for sharing it through other applications</string>
+    <string name="permission_denied">The operation was not performed because the necessary powers were not granted to implement it</string>
+    <string name="change_Lang_text">Choice Language </string>
+
+    <string-array name="answers">
+        <item>Headband</item>
+        <item>Frawah</item>
+        <item>Saddw</item>
+        <item>Henaa</item>
+        <item>Dallah</item>
+        <item>Khef</item>
+        <item>The dagger</item>
+        <item>alnmragah</item>
+        <item>اlamp</item>
+        <item>Lantern</item>
+        <item>Cowl</item>
+        <item>The turban</item>
+        <item>Dishdasha</item>
+    </string-array>
+
+    <string-array name="answer_description">
+        <item>It is placed above the ghutra to be installed</item>
+        <item>Lined with wool, worn in the winter to prevent cold</item>
+        <item>One of the traditional types of Bedouin fabric</item>
+        <item>It is used to dye hair and beard, and is also used to beautify hands for women</item>
+        <item>The bowl used to serve coffee for Arabs</item>
+        <item>Made of leather, worn in the foot, it was famous ancient times among the Arabs</item>
+        <item>A small white weapon placed on the waist</item>
+        <item>Small pillow to lean against</item>
+        <item>The name of tool that was used for lighting in the past</item>
+        <item>A tool used for lighting and decoration</item>
+        <item>A red hat famous in the Levant, Egypt and Morocco</item>
+        <item>Covered over the head</item>
+        <item>An Arab dress worn frequently in the Gulf countries</item>
+    </string-array>
+
+    <array name="Language">
+        <item>العربية</item>
+        <item>English</item>
+
+    </array>
+
+</resources>
