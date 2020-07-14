@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class answerss_activity extends AppCompatActivity {
+public class AnswerssActivity extends AppCompatActivity {
 
     private TextView mTextViewAnswer;
 
@@ -18,11 +18,14 @@ public class answerss_activity extends AppCompatActivity {
 
         mTextViewAnswer = findViewById(R.id.text_view_answer);
 
-        String answer;
+        String answer ,answer22;
         answer = getIntent().getStringExtra("answer_description");
-        if(answer != null){
-            mTextViewAnswer.setText(answer);
-        }}
+        answer22 = getIntent().getStringExtra("answer2");
+        if(answer != null && answer22 != null){
+            mTextViewAnswer.setText(answer + ":" + answer22) ;
+        }
+
+    }
 
     public void onReturnClicked (View view){
 

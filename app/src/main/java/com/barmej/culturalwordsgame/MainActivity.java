@@ -1,5 +1,6 @@
 package com.barmej.culturalwordsgame;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -7,8 +8,8 @@ import androidx.core.content.ContextCompat;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,27 +19,24 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    public  int culturalwordsImageCurrent;
     private ImageView culturalImageView;
     TextView text;
-    int culturalwordsImage [] = {R.drawable.icon_1,R.drawable.icon_2,R.drawable.icon_3,R.drawable.icon_4,R.drawable.icon_5,R.drawable.icon_6,
+    static int[] culturalwordsImage = {R.drawable.icon_1,R.drawable.icon_2,R.drawable.icon_3,R.drawable.icon_4,R.drawable.icon_5,R.drawable.icon_6,
     R.drawable.icon_7,R.drawable.icon_8,R.drawable.icon_9,R.drawable.icon_10,R.drawable.icon_11,R.drawable.icon_12,R.drawable.icon_13};
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String BUNDLE_CURRENT_INDEX = "BUNDLE_CURRENT_INDEX";
     int mCurrentIndix =0;
-
     private String[] answers;
-    private String[] answer_description;
+    private String[] answerDescrib;
     /*describ array and the element in string */
 
-    private String answers_current, answer_description_Current ;
-    private int culturalwordsImageCurrent;
+    private String answersCurrent, answerDescriptionCurrent;
+
     /*describe number of indix*/
 
     private Random mRandom;
@@ -46,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -56,14 +55,14 @@ public class MainActivity extends AppCompatActivity {
             LocaleHelper.setLocale(this, applang);
         setContentView(R.layout.activity_main);
         mRandom = new Random();
-        ImageView culturalImageView = findViewById((R.id.image_view_question));
+        culturalImageView = findViewById((R.id.image_view_question));
         Drawable giftDrawble = ContextCompat.getDrawable(this, culturalwordsImage[mCurrentIndix]);
          answers= getResources().getStringArray(R.array.answers);
-        answer_description = getResources().getStringArray(R.array.answer_description);
+        answerDescrib = getResources().getStringArray(R.array.answer_description);
         culturalImageView.setImageDrawable(giftDrawble);
 
-        answers_current = answers[mCurrentIndix];
-        answer_description_Current = answer_description[mCurrentIndix];
+        answersCurrent = answers[mCurrentIndix];
+        answerDescriptionCurrent = answerDescrib[mCurrentIndix];
 
 
     }
@@ -88,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.change_Lang_text)
                 .setItems(R.array.Language,new DialogInterface.OnClickListener(){
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
                     public void onClick(DialogInterface dialogeInterface , int which) {
                         String language = "ar";
                         switch (which) {
@@ -135,14 +135,12 @@ protected void onSaveInstanceState (Bundle outStates)
 
         protected void onRestoreInstanceState(Bundle savedInstanceState) {
             super.onRestoreInstanceState(savedInstanceState);
-            if( savedInstanceState != null )
-            {
                 mCurrentIndix= savedInstanceState.getInt(BUNDLE_CURRENT_INDEX);
                 if(mCurrentIndix != -1){
-                    Drawable giftDrawble = ContextCompat.getDrawable(this, culturalwordsImage[mCurrentIndix++]);
+                    Drawable giftDrawble = ContextCompat.getDrawable(this, culturalwordsImage[mCurrentIndix]);
                     culturalImageView.setImageDrawable(giftDrawble);
 
-                }
+
             }
             Log.i(TAG,"onRestoreInstanceState1");
         }
@@ -151,13 +149,17 @@ protected void onSaveInstanceState (Bundle outStates)
 
     public void onChangeImageClicked(View view) {
 
-        culturalImageView = findViewById(R.id.image_view_question);
-        if (mCurrentIndix < 13) {
-            mCurrentIndix = mRandom.nextInt(13);
+
+        if (mCurrentIndix <12) {
+           /* mCurrentIndix = mRandom.nextInt(12);*/
             Drawable giftDrawble = ContextCompat.getDrawable(this, culturalwordsImage[++mCurrentIndix]);
-            answers_current = answers[mCurrentIndix];
-            answer_description_Current = answer_description[mCurrentIndix];
+            answersCurrent = answers[mCurrentIndix];
+            answerDescriptionCurrent = answerDescrib[mCurrentIndix];
             culturalImageView.setImageDrawable(giftDrawble);
+
+        } else {
+            Toast.makeText(this, "تم الانتهاء من عرض الصور للكلمات التراثية وسيتم البدء بعرضها منذ البداية مرة أخرى ", Toast.LENGTH_SHORT).show();
+            mCurrentIndix =0;
 
         }
         }
@@ -166,16 +168,17 @@ protected void onSaveInstanceState (Bundle outStates)
         public void onAnswerClicked (View view){
 
                 Intent intent;
-                intent= new Intent(MainActivity.this,answerss_activity.class);
-            intent.putExtra("answer_description",answers_current);
-                intent.putExtra("answer_description",answer_description_Current);
+                intent= new Intent(MainActivity.this, AnswerssActivity.class);
+            intent.putExtra("answer_description", answersCurrent);
+                intent.putExtra("answer2", answerDescriptionCurrent);
                 startActivity(intent);
 
         }
 
         public void onShareClicked (View view){
             Intent intent = new Intent(MainActivity.this, SharesActivity.class);
-            intent.putExtra("question_text_extra",answer_description_Current);
+            intent.putExtra("question_text_extra", answerDescriptionCurrent);
+            intent.putExtra("question_text_extra",culturalwordsImage[mCurrentIndix]);
             startActivity(intent);
         }
 
